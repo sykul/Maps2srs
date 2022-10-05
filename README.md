@@ -22,8 +22,9 @@ Generate 1 Tile per Sheet
 
 * Cascadenik
 
-Create Notes
+Create Data Records
 ============
+* Data records will contain a street name and images shown below. Templates will be used to create cards from data records using flashcard software.
 * CSV
 * Image file <-> street name
 
