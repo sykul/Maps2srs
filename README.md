@@ -1,5 +1,5 @@
 # Maps2srs
-A tool to convert street names into csv flashcards which can be imported into apps such as Anki. A rough outline can be seen below.
+A tool to convert street names into csv flashcards which can be imported into apps such as Anki. The user will be able to input a town or city and the software will generate flashcards for all the named streets.  A rough outline can be seen below.
 
 CLI User Input
 ==============
@@ -10,7 +10,7 @@ Query Data
 * Geocode with Geopy/Nominatim
 * Overpass QL/OSMnx
 * Save to DB
-* If not a relation or a way, try next result (might have to initially query >1 result)
+* If not a [relation](https://wiki.openstreetmap.org/wiki/Relation) or a [way](https://wiki.openstreetmap.org/wiki/Way), try next result (might have to initially query >1 result)
 
 Clean Up Data
 =============
