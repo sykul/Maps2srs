@@ -1,5 +1,5 @@
 # Maps2srs
-A tool to convert street names into Anki cards. A rough outline can be seen below.
+A tool to convert street names into csv flashcards which can be imported into apps such as Anki. A rough outline can be seen below.
 
 CLI User Input
 ==============
