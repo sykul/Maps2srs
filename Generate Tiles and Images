@@ -1,0 +1,39 @@
+import os
+import cascadenik
+from PIL import Image
+
+def generate_tiles(location, max_zoom):
+    for zoom in range(max_zoom + 1):
+        tile_dir = os.path.join('tiles', str(zoom))
+        if not os.path.exists(tile_dir):
+            os.makedirs(tile_dir)
+        for filename in os.listdir('tiles'):
+            if filename.endswith('.png'):
+                image = Image.open(os.path.join('tiles', filename))
+                image_width, image_height = image.size
+                tile_size = 256
+                num_tiles_x = int(image_width / tile_size) + 1
+                num_tiles_y = int(image_height / tile_size) + 1
+                for x in range(num_tiles_x):
+                    for y in range(num_tiles_y):
+                        bbox = (x * tile_size, y * tile_size, (x + 1) * tile_size, (y + 1) * tile_size)
+                        tile = image.crop(bbox)
+                        tile_filename = os.path.join(tile_dir, '{}_{}_{}.png'.format(location, zoom, x + y * num_tiles_x))
+                        tile.save(tile_filename)
+
+def generate_flashcard_csv(location, output_dir):
+    flashcard_csv_filename = os.path.join(output_dir, '{}_flashcards.csv'.format(location))
+    with open(flashcard_csv_filename, 'w') as f:
+        f.write('Street Name,Image File\n')
+        for filename in os.listdir(os.path.join('tiles', '18')):
+            if filename.endswith('.png'):
+                street_name = os.path.splitext(filename)[0].split('_')[0]
+                image_file = os.path.join('tiles', '18', filename)
+                f.write('{},{}\n'.format(street_name, image_file))
+def main():
+    args = parse_args()
+    lat, lon = geocode_location(args.location)
+    query_data(args.location, args.max_zoom)
+    connect_roads('graph.graphml')
+    generate_tiles(args.location, args.max_zoom)
+    generate_flashcard_csv(args.location, args.output_dir)
