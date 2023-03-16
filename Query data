@@ -1,0 +1,24 @@
+import geopy
+from geopy.geocoders import Nominatim
+import osmnx as ox
+import sqlite3
+
+def geocode_location(location):
+    geolocator = Nominatim(user_agent='maps2srs')
+    location = geolocator.geocode(location)
+    return location.latitude, location.longitude
+
+def query_data(location, max_zoom):
+    place = ox.gdf_from_place(location, which_result=1)
+    G = ox.graph_from_place(location, network_type='all')
+    ox.plot_graph(ox.project_graph(G), show=False, save=True,
+                  filename='{}.png'.format(place.place_name), dpi=300, node_size=0,
+                  edge_linewidth=0.5, edge_color='#999999', bgcolor='white',
+                  use_geom=True, axis_off=True, close=False, verbose=False)
+    ox.save_graphml(G, 'graph.graphml')
+    bbox = ox.bbox_from_place(location)
+    # Download OSM tile images
+    for zoom in range(max_zoom + 1):
+        filename = os.path.join('tiles', '{}_{}.png'.format(location, zoom))
+        if not os.path.exists(filename):
+            ox.save_tile_map(filename, bbox=bbox, zoom=zoom, img_format='png')
