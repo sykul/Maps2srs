@@ -1,0 +1,11 @@
+import argparse
+
+def parse_args():
+    parser = argparse.ArgumentParser(description='Convert street names into CSV flashcards.')
+    parser.add_argument('location', metavar='LOCATION', type=str,
+                        help='a town or city name')
+    parser.add_argument('--max_zoom', type=int, default=18,
+                        help='the maximum zoom level for tile images (default: 18)')
+    parser.add_argument('--output_dir', type=str, default='output',
+                        help='the directory to save the flashcard CSV and image files (default: "output")')
+    return parser.parse_args()
