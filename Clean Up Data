@@ -1,0 +1,6 @@
+import networkx as nx
+
+def connect_roads(graphml_file):
+    G = nx.read_graphml(graphml_file)
+    # Implement algorithm to connect contiguous, homonymous roads
+    nx.write_graphml(G, graphml_file)
